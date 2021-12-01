@@ -10,6 +10,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import ru.gb.course1.kotlin_lesson_10_gps.databinding.ActivityMainBinding
 import ru.gb.course1.kotlin_lesson_10_gps.util.AsyncGeocoder
 import ru.gb.course1.kotlin_lesson_10_gps.util.toPrintString
@@ -22,6 +28,8 @@ private const val GPS_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    private var mapView: GoogleMap? = null
+
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             binding.requestPermissionTextView.text = if (isGranted) "УСПЕХ" else "ПРОВАЛ"
@@ -33,6 +41,12 @@ class MainActivity : AppCompatActivity() {
             field = value
             binding.addressButton.isVisible = value != null
             binding.addressTextView.isVisible = value != null
+
+            value?.let {
+                val latlon = LatLng(it.latitude, it.longitude)
+                mapView?.addMarker(MarkerOptions().position(latlon))
+                mapView?.moveCamera(CameraUpdateFactory.newLatLng(latlon))
+            }
         }
 
     private val locationManager by lazy { getSystemService(LOCATION_SERVICE) as LocationManager }
@@ -61,6 +75,14 @@ class MainActivity : AppCompatActivity() {
         binding.addressButton.isVisible = false
         binding.addressTextView.isVisible = false
         binding.progressBar.isVisible = false
+
+        registerMapCallback {
+            mapView = it
+            Toast.makeText(this@MainActivity, "Map Ready", Toast.LENGTH_SHORT).show()
+            val sydney = LatLng(-34.0, 151.0)
+            it.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+            it.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        }
 
         initClickListeners()
     }
@@ -103,6 +125,11 @@ class MainActivity : AppCompatActivity() {
         binding.stopButton.setOnClickListener {
             locationManager.removeUpdates(locationListener)
         }
+    }
+
+    private fun registerMapCallback(callback: OnMapReadyCallback) {
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
     }
 
 }
