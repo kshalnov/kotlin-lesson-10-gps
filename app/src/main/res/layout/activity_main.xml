@@ -1,18 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/request_permission_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Permission" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/request_permission_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ToDo" />
+
+    <LinearLayout
+        android:id="@+id/location_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/last_known_location_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Last Known Location" />
+
+        <TextView
+            android:id="@+id/last_known_location_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ToDo" />
+
+        <Button
+            android:id="@+id/realtime_location_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Realtime Location" />
+
+        <TextView
+            android:id="@+id/realtime_location_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ToDo" />
+
+        <Button
+            android:id="@+id/address_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address" />
+
+        <TextView
+            android:id="@+id/address_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ToDo" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/stop_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stop" />
+
+    </LinearLayout>
+
+</LinearLayout>
